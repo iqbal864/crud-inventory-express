@@ -3,6 +3,7 @@ import * as UserService from "./services/user.js";
 import * as SupplierService from "./services/supplier.js";
 import * as ProductService from "./services/product.js";
 import * as PoService from "./services/po.js";
+import { auth } from "./middleware/auth.js";
 
 const app = express();
 const port = 8082;
@@ -12,7 +13,7 @@ app.use(express.json());
 
 // routes untuk users / karyawan toko
 app.post("/login", UserService.login);
-app.get("/users", UserService.getUser);
+app.get("/users", auth, UserService.getUser);
 app.post("/users", UserService.addUser);
 app.put("/users/:id", UserService.updateUser);
 app.delete("/users/:id", UserService.deleteUser);
