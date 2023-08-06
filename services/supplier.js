@@ -22,6 +22,12 @@ export const getSupplierById = async (req, res, next) => {
 
 export const addSupplier = async (req, res, next) => {
   try {
+    await SupplierRepository.createData(
+      req.body.name,
+      req.body.address,
+      req.body.email
+    );
+
     const [supplier] = [
       {
         name: req.body.name,

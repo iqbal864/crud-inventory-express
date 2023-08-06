@@ -1,5 +1,6 @@
 import express from "express";
 import * as UserService from "./services/user.js";
+import * as SupplierRepository from "./services/supplier.js";
 
 const app = express();
 const port = 8082;
@@ -14,6 +15,13 @@ app.post("/users", UserService.addUser);
 app.put("/users/:id", UserService.updateUser);
 app.delete("/users/:id", UserService.deleteUser);
 app.get("/users/:id", UserService.getUserById);
+
+// routes untuk supplier
+app.get("/supplier", SupplierRepository.getSupplier);
+app.post("/supplier", SupplierRepository.addSupplier);
+app.put("/supplier/:id", SupplierRepository.updateSupplier);
+app.delete("/supplier/:id", SupplierRepository.deleteSupplier);
+app.get("/supplier/:id", SupplierRepository.getSupplierById);
 
 app.listen(port, host, () => {
   console.log(`server REST API berjalan di http://${host}:${port}`);
