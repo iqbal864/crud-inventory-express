@@ -31,9 +31,9 @@ export const addPo = async (req, res, next) => {
 
     const [po] = [
       {
-        name: req.body.supplier_id,
-        price: req.body.product_id,
-        price: req.body.qty,
+        supplier_id: req.body.supplier_id,
+        product_id: req.body.product_id,
+        qty: req.body.qty,
       },
     ];
 
