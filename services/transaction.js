@@ -26,13 +26,13 @@ export const getTransById = async (req, res, next) => {
   }
 };
 
-export const customerGetTransById = async (req, res, next) => {
+export const customerGetTransHistory = async (req, res, next) => {
   try {
     const header = req.headers["authorization"];
     jwt.verify(header, "secret-iqbal", async (error, data) => {
       if (data.customer_id == req.params.id) {
         const id = req.params.id;
-        const [result] = await TransactionRepository.getByIdCustomer(id);
+        const [result] = await TransactionRepository.getHistoryCustomer(id);
         if (result.length > 0) {
           respSuccess(res, "success", result);
         } else {

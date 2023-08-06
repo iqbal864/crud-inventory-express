@@ -26,6 +26,27 @@ export const getCustomerById = async (req, res, next) => {
   }
 };
 
+export const customerGetProfile = async (req, res, next) => {
+  try {
+    const header = req.headers["authorization"];
+    const id = req.params.id;
+    jwt.verify(header, "secret-iqbal", async (error, data) => {
+      if (data.customer_id == id) {
+        const [result] = await CustomerRepository.getById(id);
+        if (result.length > 0) {
+          respSuccess(res, "success", result[0]);
+        } else {
+          respError(res, "Customer tidak ditemukan", 404);
+        }
+      } else {
+        respError(res, "Access Forbidden!", 403);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addCustomer = async (req, res, next) => {
   try {
     const saltRound = 10;
@@ -58,6 +79,28 @@ export const updateCustomer = async (req, res, next) => {
     );
     console.log(customer);
     respSuccess(res, "berhasil mengupdate customer", customer, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const customerUpdateProfile = async (req, res, next) => {
+  try {
+    const header = req.headers["authorization"];
+    const id = req.params.id;
+    jwt.verify(header, "secret-iqbal", async (error, data) => {
+      if (data.customer_id == id) {
+        const customer = await CustomerRepository.updateData(
+          id,
+          req.body.name,
+          req.body.email
+        );
+        console.log(customer);
+        respSuccess(res, "berhasil mengupdate customer", customer, 201);
+      } else {
+        respError(res, "Access Forbidden!", 403);
+      }
+    });
   } catch (error) {
     next(error);
   }

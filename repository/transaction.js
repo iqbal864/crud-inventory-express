@@ -15,7 +15,7 @@ export const getById = (id) => {
   return result;
 };
 
-export const getByIdCustomer = (id) => {
+export const getHistoryCustomer = (id) => {
   const sql =
     "SELECT trans_id, customer.name as customer, product.name as product, transaction.qty, total_price, transaction.created_at FROM transaction JOIN customer ON transaction.customer_id = customer.customer_id JOIN product ON transaction.product_id = product.product_id WHERE transaction.customer_id = ?";
   const value = [id];

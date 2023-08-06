@@ -16,8 +16,8 @@ app.use(express.json());
 
 // routes untuk users / karyawan toko (role users / karyawan toko)
 app.post("/login", UserService.login);
-app.get("/users", auth, UserService.getUser);
 app.post("/users", UserService.addUser);
+app.get("/users", auth, UserService.getUser);
 app.put("/users/:id", auth, UserService.updateUser);
 app.delete("/users/:id", auth, UserService.deleteUser);
 app.get("/users/:id", auth, UserService.getUserById);
@@ -42,7 +42,6 @@ app.post("/po", auth, PoService.addPo);
 app.get("/po/:id", auth, PoService.getPoById);
 
 // routes untuk customer (role users / karyawan toko)
-app.post("/customer", CustomerService.addCustomer);
 app.get("/customer", auth, CustomerService.getCustomer);
 app.put("/customer/:id", auth, CustomerService.updateCustomer);
 app.delete("/customer/:id", auth, CustomerService.deleteCustomer);
@@ -57,10 +56,26 @@ app.post("/login_customer", CustomerService.login);
 
 // routes untuk transaction (role customer)
 app.post("/customer/transaction", auth_customer, TransactionService.addTrans);
+// routes untuk history transaksi (role customer)
 app.get(
   "/customer/transaction/:id",
   auth_customer,
-  TransactionService.customerGetTransById
+  TransactionService.customerGetTransHistory
+);
+
+// routes untuk customer (role customer)
+app.post("/customer", CustomerService.addCustomer);
+// routes melihat profile (role customer)
+app.get(
+  "/customer/profile/:id",
+  auth_customer,
+  CustomerService.customerGetProfile
+);
+// routes update profile (role customer)
+app.put(
+  "/customer/update_profile/:id",
+  auth_customer,
+  CustomerService.customerUpdateProfile
 );
 
 app.listen(port, host, () => {
