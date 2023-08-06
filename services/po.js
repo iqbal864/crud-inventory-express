@@ -39,7 +39,11 @@ export const addPo = async (req, res, next) => {
 
     console.log(po);
 
-    await ProductRepository.updateQty(req.body.product_id, req.body.qty);
+    const [getQty] = await ProductRepository.getById(req.body.product_id);
+
+    const qty = req.body.qty + getQty[0].qty;
+
+    await ProductRepository.updateQty(req.body.product_id, qty);
 
     respSuccess(res, "berhasil menambahkan purchase_order", po, 201);
   } catch (error) {
