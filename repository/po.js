@@ -2,7 +2,7 @@ import dbPool from "../utils/db.js";
 
 export const getAll = () => {
   const sql =
-    "SELECT po_id, supplier.name, product.name, purchase_order.qty, purchase_order.created_at FROM purchase_order JOIN supplier ON purchase_order.supplier_id = supplier.supplier_id JOIN product ON purchase_order.product_id = product.product.id";
+    "SELECT po_id, supplier.name, product.name, purchase_order.qty, purchase_order.created_at FROM purchase_order JOIN supplier ON purchase_order.supplier_id = supplier.supplier_id JOIN product ON purchase_order.product_id = product.product_id";
   const result = dbPool.query(sql);
   return result;
 };
