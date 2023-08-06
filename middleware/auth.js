@@ -1,3 +1,4 @@
+import { getById } from "../repository/user.js";
 import { respError } from "../utils/response.js";
 import jwt from "jsonwebtoken";
 
@@ -5,11 +6,16 @@ export const auth = (req, res, next) => {
   try {
     const header = req.headers["authorization"];
     if (header != null) {
-      jwt.verify(header, "secret-iqbal", (error, data) => {
+      jwt.verify(header, "secret-iqbal", async (error, data) => {
         if (error) {
           respError(res, "Access Forbidden!", 403);
         } else {
-          next();
+          const [result] = await getById(data.user_id);
+          if (result.length > 0) {
+            next();
+          } else {
+            respError(res, "Access Forbidden!", 403);
+          }
         }
       });
     } else {
