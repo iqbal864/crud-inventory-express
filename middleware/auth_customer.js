@@ -9,14 +9,12 @@ export const auth_customer = (req, res, next) => {
       jwt.verify(header, "secret-iqbal", async (error, data) => {
         if (error) {
           respError(res, "Access Forbidden!", 403);
-          next();
         } else {
           const [result] = await getById(data.customer_id);
           if (result.length > 0) {
             next();
           } else {
             respError(res, "Access Forbidden!", 403);
-            next();
           }
         }
       });
