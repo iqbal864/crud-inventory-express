@@ -26,6 +26,27 @@ export const getTransById = async (req, res, next) => {
   }
 };
 
+export const customerGetTransById = async (req, res, next) => {
+  try {
+    const header = req.headers["authorization"];
+    jwt.verify(header, "secret-iqbal", async (error, data) => {
+      if (data.customer_id == req.params.id) {
+        const id = req.params.id;
+        const [result] = await TransactionRepository.getByIdCustomer(id);
+        if (result.length > 0) {
+          respSuccess(res, "success", result);
+        } else {
+          respError(res, "Transaction tidak ditemukan", 404);
+        }
+      } else {
+        respError(res, "Access Forbidden!", 403);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addTrans = async (req, res, next) => {
   try {
     const header = req.headers["authorization"];
