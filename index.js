@@ -3,6 +3,7 @@ import * as UserService from "./services/user.js";
 import * as SupplierService from "./services/supplier.js";
 import * as ProductService from "./services/product.js";
 import * as PoService from "./services/po.js";
+import * as CustomerService from "./services/customer.js";
 import { auth } from "./middleware/auth.js";
 
 const app = express();
@@ -37,6 +38,14 @@ app.get("/products/:id", auth, ProductService.getProductById);
 app.get("/po", auth, PoService.getPo);
 app.post("/po", auth, PoService.addPo);
 app.get("/po/:id", auth, PoService.getPoById);
+
+// routes untuk customer
+app.post("/customer_login", CustomerService.login);
+app.get("/customer", auth, CustomerService.getCustomer);
+app.post("/customer", CustomerService.addCustomer);
+app.put("/customer/:id", auth, CustomerService.updateCustomer);
+app.delete("/customer/:id", auth, CustomerService.deleteCustomer);
+app.get("/customer/:id", auth, CustomerService.getCustomerById);
 
 app.listen(port, host, () => {
   console.log(`server REST API berjalan di http://${host}:${port}`);
