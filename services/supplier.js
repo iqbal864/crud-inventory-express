@@ -14,7 +14,11 @@ export const getSupplierById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const [result] = await SupplierRepository.getById(id);
-    respSuccess(res, "success", result[0]);
+    if (result.length > 0) {
+      respSuccess(res, "success", result[0]);
+    } else {
+      respError(res, "Supplier tidak ditemukan", 404);
+    }
   } catch (error) {
     next(error);
   }

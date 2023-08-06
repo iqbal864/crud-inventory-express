@@ -14,7 +14,11 @@ export const getProductById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const [result] = await ProductRepository.getById(id);
-    respSuccess(res, "success", result[0]);
+    if (result.length > 0) {
+      respSuccess(res, "success", result[0]);
+    } else {
+      respError(res, "Product tidak ditemukan", 404);
+    }
   } catch (error) {
     next(error);
   }
