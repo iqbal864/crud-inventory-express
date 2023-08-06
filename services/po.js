@@ -1,4 +1,5 @@
 import * as PoRepository from "../repository/po.js";
+import * as ProductRepository from "../repository/product.js";
 import { respError, respSuccess } from "../utils/response.js";
 
 export const getPo = async (req, res, next) => {
@@ -37,6 +38,9 @@ export const addPo = async (req, res, next) => {
     ];
 
     console.log(po);
+
+    await ProductRepository.updateQty(req.body.product_id, req.body.qty);
+
     respSuccess(res, "berhasil menambahkan purchase_order", po, 201);
   } catch (error) {
     next(error);
