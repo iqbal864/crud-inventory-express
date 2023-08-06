@@ -1,7 +1,8 @@
 import express from "express";
 import * as UserService from "./services/user.js";
-import * as SupplierRepository from "./services/supplier.js";
-import * as ProductRepository from "./services/product.js";
+import * as SupplierService from "./services/supplier.js";
+import * as ProductService from "./services/product.js";
+import * as PoService from "./services/po.js";
 
 const app = express();
 const port = 8082;
@@ -18,18 +19,23 @@ app.delete("/users/:id", UserService.deleteUser);
 app.get("/users/:id", UserService.getUserById);
 
 // routes untuk supplier
-app.get("/supplier", SupplierRepository.getSupplier);
-app.post("/supplier", SupplierRepository.addSupplier);
-app.put("/supplier/:id", SupplierRepository.updateSupplier);
-app.delete("/supplier/:id", SupplierRepository.deleteSupplier);
-app.get("/supplier/:id", SupplierRepository.getSupplierById);
+app.get("/supplier", SupplierService.getSupplier);
+app.post("/supplier", SupplierService.addSupplier);
+app.put("/supplier/:id", SupplierService.updateSupplier);
+app.delete("/supplier/:id", SupplierService.deleteSupplier);
+app.get("/supplier/:id", SupplierService.getSupplierById);
 
 // routes untuk product
-app.get("/products", ProductRepository.getProduct);
-app.post("/product", ProductRepository.addProduct);
-app.put("/products/:id", ProductRepository.updateProduct);
-app.delete("/products/:id", ProductRepository.deleteProduct);
-app.get("/products/:id", ProductRepository.getProductById);
+app.get("/products", ProductService.getProduct);
+app.post("/product", ProductService.addProduct);
+app.put("/products/:id", ProductService.updateProduct);
+app.delete("/products/:id", ProductService.deleteProduct);
+app.get("/products/:id", ProductService.getProductById);
+
+// routes untuk purchase order
+app.get("/po", PoService.getPo);
+app.post("/po", PoService.addPo);
+app.get("/po/:id", PoService.getPoById);
 
 app.listen(port, host, () => {
   console.log(`server REST API berjalan di http://${host}:${port}`);
