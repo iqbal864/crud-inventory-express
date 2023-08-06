@@ -14,29 +14,29 @@ app.use(express.json());
 // routes untuk users / karyawan toko
 app.post("/login", UserService.login);
 app.get("/users", auth, UserService.getUser);
-app.post("/users", UserService.addUser);
-app.put("/users/:id", UserService.updateUser);
-app.delete("/users/:id", UserService.deleteUser);
-app.get("/users/:id", UserService.getUserById);
+app.post("/users", auth, UserService.addUser);
+app.put("/users/:id", auth, UserService.updateUser);
+app.delete("/users/:id", auth, UserService.deleteUser);
+app.get("/users/:id", auth, UserService.getUserById);
 
 // routes untuk supplier
-app.get("/supplier", SupplierService.getSupplier);
-app.post("/supplier", SupplierService.addSupplier);
-app.put("/supplier/:id", SupplierService.updateSupplier);
-app.delete("/supplier/:id", SupplierService.deleteSupplier);
-app.get("/supplier/:id", SupplierService.getSupplierById);
+app.get("/supplier", auth, SupplierService.getSupplier);
+app.post("/supplier", auth, SupplierService.addSupplier);
+app.put("/supplier/:id", auth, SupplierService.updateSupplier);
+app.delete("/supplier/:id", auth, SupplierService.deleteSupplier);
+app.get("/supplier/:id", auth, SupplierService.getSupplierById);
 
 // routes untuk product
-app.get("/products", ProductService.getProduct);
-app.post("/product", ProductService.addProduct);
-app.put("/products/:id", ProductService.updateProduct);
-app.delete("/products/:id", ProductService.deleteProduct);
-app.get("/products/:id", ProductService.getProductById);
+app.get("/products", auth, ProductService.getProduct);
+app.post("/product", auth, ProductService.addProduct);
+app.put("/products/:id", auth, ProductService.updateProduct);
+app.delete("/products/:id", auth, ProductService.deleteProduct);
+app.get("/products/:id", auth, ProductService.getProductById);
 
 // routes untuk purchase order
-app.get("/po", PoService.getPo);
-app.post("/po", PoService.addPo);
-app.get("/po/:id", PoService.getPoById);
+app.get("/po", auth, PoService.getPo);
+app.post("/po", auth, PoService.addPo);
+app.get("/po/:id", auth, PoService.getPoById);
 
 app.listen(port, host, () => {
   console.log(`server REST API berjalan di http://${host}:${port}`);
