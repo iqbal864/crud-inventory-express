@@ -28,6 +28,7 @@ export const updateData = (id, name, email) => {
     "UPDATE users SET name = ?, email = ?, updated_at = ? where user_id = ?";
   const value = [name, email, updatedAt, id];
   const result = dbPool.query(sql, value);
+  return result;
 };
 
 export const deleteData = (id) => {
