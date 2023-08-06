@@ -4,7 +4,9 @@ import * as SupplierService from "./services/supplier.js";
 import * as ProductService from "./services/product.js";
 import * as PoService from "./services/po.js";
 import * as CustomerService from "./services/customer.js";
+import * as TransactionService from "./services/transaction.js";
 import { auth } from "./middleware/auth.js";
+import { auth_customer } from "./middleware/auth_customer.js";
 
 const app = express();
 const port = 8082;
@@ -40,12 +42,17 @@ app.post("/po", auth, PoService.addPo);
 app.get("/po/:id", auth, PoService.getPoById);
 
 // routes untuk customer
-app.post("/customer_login", CustomerService.login);
-app.get("/customer", auth, CustomerService.getCustomer);
+app.post("/login_customer", CustomerService.login);
 app.post("/customer", CustomerService.addCustomer);
+app.get("/customer", auth, CustomerService.getCustomer);
 app.put("/customer/:id", auth, CustomerService.updateCustomer);
 app.delete("/customer/:id", auth, CustomerService.deleteCustomer);
 app.get("/customer/:id", auth, CustomerService.getCustomerById);
+
+// routes untuk transaction
+app.get("/transaction", auth, TransactionService.getTrans);
+app.post("/transaction", auth_customer, TransactionService.addTrans);
+app.get("/transaction/:id", auth, TransactionService.getTransById);
 
 app.listen(port, host, () => {
   console.log(`server REST API berjalan di http://${host}:${port}`);
