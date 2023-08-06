@@ -38,3 +38,11 @@ export const deleteData = (id) => {
 
   return result;
 };
+
+export const updateQty = (id, qty) => {
+  let updatedAt = new Date();
+  const sql = "UPDATE product SET qty = ?, updated_at = ? where product_id = ?";
+  const value = [qty, updatedAt, id];
+  const result = dbPool.query(sql, value);
+  return result;
+};
