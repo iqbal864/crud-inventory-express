@@ -1,13 +1,15 @@
 import dbPool from "../utils/db.js";
 
 export const getAll = () => {
-  const sql = "SELECT * FROM purchase_order";
+  const sql =
+    "SELECT po_id, supplier.name, product.name, purchase_order.qty, purchase_order.created_at FROM purchase_order JOIN supplier ON purchase_order.supplier_id = supplier.supplier_id JOIN product ON purchase_order.product_id = product.product.id";
   const result = dbPool.query(sql);
   return result;
 };
 
 export const getById = (id) => {
-  const sql = "SELECT * FROM purchase_order WHERE po_id = ?";
+  const sql =
+    "SELECT po_id, supplier.name, product.name, purchase_order.qty, purchase_order.created_at FROM purchase_order JOIN supplier ON purchase_order.supplier_id = supplier.supplier_id JOIN product ON purchase_order.product_id = product.product.id WHERE po_id = ?";
   const value = [id];
   const result = dbPool.query(sql, value);
   return result;
