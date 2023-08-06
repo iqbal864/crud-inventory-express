@@ -48,10 +48,17 @@ export const addTrans = async (req, res, next) => {
       ];
 
       const qty = getPrice[0].qty - req.body.qty;
+      if (qty < 0) {
+        respError(
+          res,
+          `Quantity tidak bisa lebih besar dari ${getPrice[0].qty}`,
+          404
+        );
+      } else {
+        await ProductRepository.updateQty(req.body.product_id, qty);
 
-      await ProductRepository.updateQty(req.body.product_id, qty);
-
-      respSuccess(res, "berhasil menambahkan transaction", trans, 201);
+        respSuccess(res, "berhasil menambahkan transaction", trans, 201);
+      }
     } else {
       respError(res, "Quantity product kosong", 404);
     }
